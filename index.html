@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>TidyUp — Weekly Chore Rotation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Custom Theme -->
+    <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base: "#0D0F0E",
+            base2: "#151817",
+            base3: "#1A1E1C",
+            emerald: "#1FAD6B",
+            emeraldHover: "#19975C",
+            emeraldPressed: "#147F4D",
+            textMain: "#F6FFF9",
+            textSoft: "#A9C7B4",
+            textMuted: "#6A8073",
+          },
+          boxShadow: {
+            softglow: "0 0 18px rgba(31, 173, 107, 0.4)"
+          },
+          borderRadius: {
+            xl: "18px",
+            "2xl": "24px"
+          }
+        }
+      }
+    }
+    </script>
+
+    <link href="style.css" rel="stylesheet" />
+</head>
+
+<body class="bg-gray-950 text-gray-100 min-h-screen">
+
+    <!-- =================== WELCOME SCREEN =================== -->
+    <div id="welcome-screen" class="hidden flex flex-col items-center text-center p-6 max-w-xl mx-auto">
+
+        <h1 class="text-4xl font-bold text-emerald-400 mb-4 drop-shadow-lg">Welcome to TidyUp</h1>
+
+        <p class="text-gray-300 mb-6 leading-relaxed">
+            TidyUp helps your household rotate chores fairly each week.
+            Create or join a household to get started!
+        </p>
+
+        <div class="flex gap-4 mt-2">
+            <button id="welcome-create"
+                class="px-6 py-3 bg-emerald hover:bg-emeraldHover rounded-xl font-semibold shadow-softglow transition">
+                Create a household
+            </button>
+
+            <button id="welcome-join"
+                class="px-6 py-3 border border-emerald text-emerald hover:bg-emerald/10 rounded-xl font-semibold transition">
+                Join with code
+            </button>
+        </div>
+
+        <p class="text-gray-500 text-sm mt-6">Your browser remembers your household automatically.</p>
+    </div>
+
+    <!-- =================== MAIN APP =================== -->
+    <div id="app-main" class="hidden max-w-5xl mx-auto p-6">
+
+        <!-- HEADER -->
+        <header class="text-center my-10">
+            <h1 class="text-5xl font-extrabold text-emerald-400 drop-shadow-[0_0_18px_rgba(31,173,107,0.8)]">
+                TidyUp
+            </h1>
+            <p class="text-gray-400 mt-2">
+                Shared chores made simple. Rotates every Sunday at 11:59 PM.
+            </p>
+        </header>
+
+        <!-- GRID -->
+        <main class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- ================= ROOMMATES CARD ================= -->
+            <div class="card-wrap">
+            <section class="bg-base2 p-6 rounded-2xl shadow-softglow border border-emerald/10 card-tight">
+
+                <h2 class="text-2xl font-semibold mb-4">Roommates</h2>
+
+                <!-- Add roommate -->
+                <form id="roommate-form" class="flex items-center gap-3 mb-4">
+                    <input id="roommate-name"
+                           class="flex-1 bg-base3 border border-base2 p-3 rounded-xl text-textMain"
+                           type="text" placeholder="Name (e.g., KC)" required />
+
+                    <button class="px-5 py-2.5 bg-emerald hover:bg-emeraldHover 
+                                   rounded-xl shadow-softglow transition">
+                        Add
+                    </button>
+                </form>
+
+                <ul id="roommate-list" class="space-y-2"></ul>
+
+            </section>
+            </div>
+
+            <!-- ================= CHORES CARD ================= -->
+            <div class="card-wrap">
+            <section class="bg-base2 p-6 rounded-2xl shadow-softglow border border-emerald/10 card-tight">
+
+                <h2 class="text-2xl font-semibold mb-4">Chores</h2>
+
+                <form id="chore-form"
+                      class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 items-center">
+
+                    <input id="chore-name"
+                        class="input input-lg bg-base3 border border-base2 text-textMain"
+                        type="text" placeholder="Chore (e.g., Trash)" required />
+
+                    <input id="chore-details"
+                        class="input input-lg bg-base3 border border-base2 text-textMain"
+                        type="text" placeholder="Optional details (what to clean)" />
+
+                    <div class="flex md:justify-end w-full">
+                        <button class="px-5 py-3 bg-emerald hover:bg-emeraldHover w-full md:w-auto 
+                                       rounded-xl shadow-softglow transition">
+                            Add
+                        </button>
+                    </div>
+
+                </form>
+
+                <ul id="chore-list" class="space-y-2"></ul>
+
+            </section>
+            </div>
+
+            <!-- ================= ASSIGNMENTS CARD ================= -->
+            <div class="card-wrap md:col-span-2">
+            <section class="bg-base2 p-6 rounded-2xl shadow-softglow border border-emerald/10 card-tight">
+
+                <div class="flex justify-between mb-4">
+                    <h2 class="text-2xl font-semibold">Current Assignments</h2>
+
+                    <div class="text-right">
+                        <div class="text-textSoft text-sm">Next rotation:</div>
+                        <div id="countdown-text" class="font-semibold">—</div>
+                    </div>
+                </div>
+
+                <div id="assignments" class="space-y-3"></div>
+
+                <!-- BUTTONS -->
+                <div class="flex flex-wrap gap-3 mt-6">
+
+                    <button class="btn" id="enable-notifs">Enable reminders</button>
+
+                    <button class="btn-outline" id="download-ics">Add to calendar (.ics)</button>
+
+                    <button class="btn" id="rotate-now">Rotate now</button>
+
+                    <button class="btn-danger" id="clear-all">Clear all</button>
+
+                    <button class="btn-outline" id="reset-start">Reset start</button>
+
+                    <button class="btn-outline" id="show-code">Show join code</button>
+
+                </div>
+
+                <p class="text-textMuted text-sm mt-4">
+                    Checkmarks reset each week. Reminders need browser permission.
+                </p>
+
+            </section>
+            </div>
+
+        </main>
+
+        <footer class="mt-12 text-center text-textMuted text-sm">
+            TidyUp • Chore rotation made easy
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

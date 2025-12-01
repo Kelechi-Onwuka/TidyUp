@@ -1,0 +1,206 @@
+/* 
+   BASE UTILITY */
+
+.hidden { display: none; }
+
+.fade {
+    animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+ul { list-style: none; padding-left: 0; margin: 0; }
+
+html { scroll-behavior: smooth; }
+
+/* 
+   MODERN CARD WRAP GLOW
+*/
+
+.card-wrap {
+    position: relative;
+}
+
+.card-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    background: radial-gradient(
+        circle at center,
+        rgba(31, 173, 107, 0.22),
+        rgba(0, 0, 0, 0)
+    );
+    filter: blur(40px);
+    z-index: -1;
+}
+
+/* Tighter, cleaner card spacing */
+.card-tight {
+    padding: 20px;
+    margin-bottom: 28px;
+}
+
+/* 
+   INPUT FIELDS
+*/
+
+.input {
+    @apply w-full bg-base3 text-textMain placeholder-gray-400 
+           px-4 py-3 rounded-xl 
+           focus:outline-none focus:ring-2 focus:ring-emerald transition duration-200;
+}
+
+.input-lg { @apply rounded-2xl px-5 py-3.5; }
+
+/* 
+   ROOMMATE + CHORE LIST ITEMUPGRADED)
+*/
+
+#roommate-list li,
+#chore-list li {
+    background: linear-gradient(135deg, #101212, #171A19);
+    backdrop-filter: blur(4px);
+    border: 1px solid #1A1E1C;
+    padding: 14px 16px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.25s ease;
+}
+
+#roommate-list li:hover,
+#chore-list li:hover {
+    border-color: #1FAD6B55;
+    box-shadow: 0 0 14px rgba(31, 173, 107, 0.22);
+    transform: translateY(-2px);
+}
+
+/* LIST ITEM ACTION BUTTONS */
+.item-actions button {
+    background: #1FAD6B15;
+    color: #A9C7B4;
+    border: 1px solid #1A1E1C;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 0.78rem;
+    transition: 0.2s ease;
+}
+
+.item-actions button:hover {
+    background: #1FAD6B33;
+    color: #F6FFF9;
+    border-color: #1FAD6B55;
+}
+
+/* 
+   ASSIGNMENT ROWS (POLISHED)
+*/
+
+.assignment {
+    background: linear-gradient(145deg, #111312, #1A1E1C);
+    backdrop-filter: blur(4px);
+    padding: 16px 18px;
+    border-radius: 18px;
+    border: 1px solid #1A1E1C;
+    display: grid;
+    grid-template-columns: 120px 1fr 70px;
+    gap: 10px;
+    align-items: center;
+    transition: 0.25s ease-out;
+}
+
+.assignment:hover {
+    border-color: #1FAD6B55;
+    box-shadow: 0 0 18px rgba(31, 173, 107, 0.25);
+    transform: translateY(-3px);
+}
+
+.assignment .who {
+    font-weight: 600;
+    color: #F6FFF9;
+}
+
+.assignment .what {
+    color: #A9C7B4;
+    font-size: 0.95rem;
+}
+
+.assignment .details {
+    grid-column: 1 / -1;
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: #6A8073;
+}
+
+/* Completed state */
+.assignment.done {
+    opacity: 0.55;
+}
+
+.assignment.done .what {
+    text-decoration: line-through;
+    color: #6A8073;
+}
+
+/* Checklist appearance */
+.assignment input[type="checkbox"] {
+    accent-color: #1FAD6B;
+    width: 18px;
+    height: 18px;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+/*
+   BUTTON STYLES (GLOBAL + FIXED)
+ */
+
+.btn {
+    @apply px-4 py-2 rounded-xl font-medium 
+           bg-emerald text-white 
+           shadow-softglow 
+           transition duration-200;
+}
+
+.btn:hover {
+    @apply bg-emeraldHover scale-[1.03];
+}
+
+.btn-outline {
+    @apply px-4 py-2 rounded-xl font-medium 
+           border border-emerald text-emerald 
+           transition duration-200;
+}
+
+.btn-outline:hover {
+    @apply bg-emerald/10 scale-[1.03];
+}
+
+.btn-danger {
+    @apply px-4 py-2 rounded-xl font-medium 
+           bg-red-600 text-white transition duration-200;
+}
+
+.btn-danger:hover {
+    @apply bg-red-700 scale-[1.03];
+}
+
+/* Smaller icon buttons */
+.icon-btn {
+    @apply bg-base3 text-textSoft px-3 py-1 rounded-xl border border-base2 
+           hover:bg-base2 hover:text-white transition;
+}
+
+/* 
+   WELCOME SCREEN
+*/
+
+#welcome-screen { animation: fadeIn 0.4s ease-out; }
+
+.welcome-title { color: #F6FFF9; }
+.welcome-text  { color: #A9C7B4; }
