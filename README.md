@@ -1,5 +1,7 @@
 # TidyUp — Automated Chore Rotation Web App
 
+🔗 **Live Demo:** https://kelechi-onwuka.github.io/TidyUp/
+
 TidyUp is a lightweight household-management web application originally created to help my college roommates organize and rotate weekly chores without confusion.
 The system is designed for shared living spaces of any kind; apartments, dorms, or full households.
 Each household receives a secure auto-generated join code, allowing members to safely join the same chore group. All updates (chore completions, new assignments, reminders, and rotations) are instantly visible to every member, ensuring transparency and shared accountability.
